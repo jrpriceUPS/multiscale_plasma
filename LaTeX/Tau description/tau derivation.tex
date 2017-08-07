@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\graphicspath{{./figures/}}
+
+\title{Computing $\tau_{k}(\mathbf{r})$ in HMM}
+\author{Jake Price}
+
+\begin{document}
+\maketitle
+
+
+
+
+Suppose we have a system with $n$ distinct species of ions. For species $k$, let the set of indices corresponding to ions in that species be given by $S_k=\{i\;|\;$particle $i$ is a member of species $k\}$. Then the Klimontovich distribution for species $k$ is given by
+\begin{equation}
+\mathcal{N}_k(\mathbf{r},\mathbf{v},\{\mathbf{r}_i\}_{i=1}^N,\{\mathbf{v}_i\}_{i=1}^N)=\sum_{i\in S_k}\delta(\mathbf{r}-\mathbf{r}_i(t))\delta(\mathbf{v}-\mathbf{v}_i(t)).
+\end{equation}Note that the expected value of these distributions are $f_k$ by definition.
+
+Suppose now that, over the macroscopic domain, these distributions evolve according to the BGK equation with periodic boundary conditions and Yukawa potential:
+\begin{equation}
+\begin{split}
+&\frac{\partial f_k}{\partial t}+\mathbf{v}\cdot\nabla_\mathbf{r}f_k-\frac{Z_ke}{m_k}\nabla_\mathbf{r}\phi(\mathbf{r},t)\cdot\nabla_\mathbf{v}f_k=\frac{f_{k}^{eq}-f_k}{\tau_{k}}\\
+&\left(\bigtriangleup_\mathbf{r}-\frac{1}{\lambda^2}\right)\phi(\mathbf{r},t)=-\frac{1}{\epsilon_0}\rho(\mathbf{r}',t)\\
+&f_k(\mathbf{r},\mathbf{v},0)=f_{k}(\mathbf{r},\mathbf{v})\\
+&\left.f_k(\mathbf{r},\mathbf{v},t)\right|_{x=0}=\left.f_{k}(\mathbf{r},\mathbf{v},t)\right|_{x=L_x},\;\;\;\;
+\left.\phi(\mathbf{r},\mathbf{v},t)\right|_{x=0}=\left.\phi(\mathbf{r},\mathbf{v},t)\right|_{x=L_x}\\
+&\left.f_k(\mathbf{r},\mathbf{v},t)\right|_{y=0}=\left.f_{k}(\mathbf{r},\mathbf{v},t)\right|_{y=L_y},\;\;\;\;
+\left.\phi(\mathbf{r},\mathbf{v},t)\right|_{y=0}=\left.\phi(\mathbf{r},\mathbf{v},t)\right|_{y=L_y}\\
+&\left.f_k(\mathbf{r},\mathbf{v},t)\right|_{z=0}=\left.f_{k}(\mathbf{r},\mathbf{v},t)\right|_{z=L_z},\;\;\;\;
+\left.\phi(\mathbf{r},\mathbf{v},t)\right|_{z=0}=\left.\phi(\mathbf{r},\mathbf{v},t)\right|_{z=L_z}.
+\end{split}
+\label{eq:BGK}
+\end{equation}
+Note that we are now only considering one equilibrium distribution and one relaxation time for each species, rather than joint equilibrium densities and relaxation times for every species pair. 
+
+The quantities $\tau_{k}$ are unknown. They are allowed to vary in space and time, but not in velocity. The problem posed is this: after completing a macroscopic step (or several), how could one conduct an MD simulation in every macroscopic cell in order to determine these parameters? We will calculate this by matching the behavior on one level to behavior on another.  I suspect that we might be able to here make some parallels to the renormalization group transformation from critical statistical mechanics and quantum field theory. I will get back to you on this. In particular, we wish for the rates of change of the entropies of each species in the BGK simulation to agree with that observed in the MD simulation.
+
+We write the entropy of each species as:
+\begin{equation}
+\mathcal{H}_k(t)=\iint f_k\log(f_k)\,d\mathbf{r}\,d\mathbf{v}.
+\end{equation}Taking the time derivative, we find:
+\begin{align*}
+\frac{\partial \mathcal{H}_k}{\partial t}=&\iint \frac{f_{k}^{eq}-f_k}{\tau_{k}}[\log(f_k)+1]\,d\mathbf{r}\,d\mathbf{v}\\
+&-\iint \mathbf{v}\cdot \nabla_{\mathbf{r}}f_k[\log(f_k)+1]\,d\mathbf{r}\,d\mathbf{v}\\
+&+\iint \frac{Z_ke}{m_k}\nabla_\mathbf{r}\phi\cdot \nabla_\mathbf{v}f_k[\log(f_k)+1]\,d\mathbf{r}\,d\mathbf{v}.
+\end{align*}Some of these integrals can be shown to be zero. In particular, consider the electric field integral:
+\begin{align*}\iint \frac{Z_k e}{m_k}\nabla_\mathbf{r}\phi\cdot\nabla_\mathbf{v}f_k[\log(f_k)+1]\,d\mathbf{r}\,d\mathbf{v}&=\int \frac{Z_k e}{m_k}\nabla_\mathbf{r}\phi\cdot\int \nabla_\mathbf{v}[f_k\log(f_k)]\,d\mathbf{v}\,d\mathbf{r}=0.
+\end{align*}The inner velocity integral is zero through the divergence theorem due to the fact that $f_k$ vanishes for large $|\mathbf{v}|$. In addition,
+\[\iint \frac{f_k^{eq}-f_k}{\tau_k}d\mathbf{v}\,d\mathbf{r}=\int \rho_k(\mathbf{r}-\rho_k)\,d\mathbf{r}\,d\mathbf{r}=0
+\]because $f_k^{eq}$ is defined to have the same local density as $f_k$. Thus, the entropy evolution simplifies to:
+\begin{align*}
+\frac{\partial \mathcal{H}_k}{\partial t}=&\iint \frac{f_{k}^{eq}-f_k}{\tau_{k}}\log(f_k)\,d\mathbf{r}\,d\mathbf{v}-\iint \mathbf{v}\cdot \nabla_{\mathbf{r}}f_k[\log(f_k)+1]\,d\mathbf{r}\,d\mathbf{v}.
+\end{align*}Now, we discretize the spatial integrals in accordance with the macroscale spacing (since this is the level of resolution we want for our $\tau_k$):
+\begin{align*}
+\sum_i (\Delta r)^d\frac{\partial }{\partial t}\int f_k(\mathbf{r}_i)\log(f_k(\mathbf{r}_i))\,d\mathbf{v}=&\sum_i\frac{(\Delta r)^d}{\tau_{k}(\mathbf{r}_i,t)}\int [f^{eq}_{k}(\mathbf{r}_i)-f_k(\mathbf{r}_i)]\log(f_k(\mathbf{r}_i))\,d\mathbf{v}\\
+&-\sum_i (\Delta r)^d\int \mathbf{v}\cdot \nabla_\mathbf{r}(f_k(\mathbf{r}_i))[\log(f_k(\mathbf{r}_i))+1]\,d\mathbf{v}.
+\end{align*}We require the rate of change of the entropy of each species \emph{at each position} to match observation, leaving
+\begin{align}
+\frac{\partial }{\partial t}\int f_k(\mathbf{r}_i)\log(f_k(\mathbf{r}_i))\,d\mathbf{v}=&\frac{1}{\tau_{k}(\mathbf{r}_i,t)}\int [f^{eq}_{k}(\mathbf{r}_i)-f_k(\mathbf{r}_i)]\log(f_k(\mathbf{r}_i))\,d\mathbf{v}\label{eq}\\
+&-\int \mathbf{v}\cdot \nabla_\mathbf{r}(f_k(\mathbf{r}_i))[\log(f_k(\mathbf{r}_i))+1]\,d\mathbf{v}\label{adv}.
+\end{align}The left hand side is our observational data. We must construct our MD simulation such that it can provide us with the data we need. In order to capture the local nature of this quantity, we will conduct MD simulations at every macroscopic cell. Our MD simulation will be on a much smaller domain that is embedded in the finite volume. Over these macroscopic volumes, $f_k$, $f_k^{eq}$, and $\tau_k$ are assumed to be constant. Thus, our MD simulation is taking place in a homogeneous domain, suggesting periodic boundary conditions.
+
+If we use this small domain and periodic boundary conditions, and initialize it with the correct nonequilibrium $f$ distribution, it will relax toward equilibrium without any knowledge of the activity in neighboring cells. This is the case where the advection term (\ref{adv}) is negligible compared to the relaxation term (\ref{eq}) (time scale separation). We will have explicitly created an MD simulation for which advection from neighboring cells is ignored. I believe that, if we did this and then ignored the advection component on the right hand side (\ref{adv}), the left hand side would still match the right hand side.
+
+Alternatively, we can attempt to model advection from neighboring cells. This would require a dynamic, grand canonical boundary condition that would, at the proper rates, inject particles from neighboring cells with \emph{that cell's} velocity distribution. This will necessarily give us a different entropy rate where the difference is due entirely to the advection we artificially introduced \emph{exactly such that} it matched (\ref{adv}). Then, in computing $\tau$, our first step would be to subtract out the entropy change due to (\ref{adv}) to isolate only the relaxation portion. To me, this seems unnecessary when I feel we can just simulate only the relaxation portion to begin with. I will read up on Weinan E to see if this is the same argument he makes.
+
+Regardless, we are done either way. Suppose we run the MD simulation. At each micro time step we record the velocities of the ions of each species in a histogram. A time average of this histogram gives
+\begin{equation}
+f_k^{MD}(\mathbf{r}_i)\approx f_k(\mathbf{r}_i),
+\end{equation}which we can then use to compute
+\begin{align}
+\Delta \mathcal{H}^{MD}_k(\mathbf{r}_i)=\frac{\partial}{\partial t}\int f_k^{MD}(\mathbf{r}_i)\log(f_k^{MD}(\mathbf{r}_i))\,d\mathbf{v}\label{H1}.
+\end{align}We can now solve explicitly for $\tau_k$ at each position $\mathbf{r}_i$. If we disregard the advection term, we find
+\begin{equation}
+\tau_k(\mathbf{r}_i)=\frac{1}{\Delta\mathcal{H}_k^{MD}}\int [f_k^{eq}(\mathbf{r}_i)-f_k(\mathbf{r}_i)]\log(f_k(\mathbf{r}_i))\,d\mathbf{v}.
+\end{equation}If we do implement the advection term, $\tau_k$ is given by:
+\begin{equation}
+\tau_k(\mathbf{r}_i)=\frac{\int [f_k^{eq}(\mathbf{r}_i)-f_k(\mathbf{r}_i)]\log(f_k(\mathbf{r}_i))\,d\mathbf{v}}{\Delta\mathcal{H}_k^{MD}+\int \mathbf{v}\cdot\nabla_\mathbf{r}(f_k(\mathbf{r}_i))[\log(f_k(\mathbf{r}_i))+1]\,d\mathbf{v}}.
+\end{equation}
+
+
+\end{document}

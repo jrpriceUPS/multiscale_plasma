@@ -1,0 +1,75 @@
+\relax 
+\citation{weinan2011principles}
+\citation{weinan2007heterogeneous}
+\citation{weinan2007heterogeneous}
+\citation{weinan2007heterogeneous}
+\citation{weinan2007heterogeneous}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Multiscale modeling}{2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Multiscale model hierarchy \cite {weinan2007heterogeneous}. As we progress up the hierarchy, the sizes of the spatial and temporal domains we can compute reasonably with a model increase, but the level of detail decreases. HMM seeks to construct a hybrid method that joins two models at different levels in the hierarchy.}}{2}}
+\newlabel{HMMhierarchy}{{1}{2}}
+\citation{weinan2007heterogeneous}
+\citation{ren2005heterogeneous}
+\citation{sturrock1994plasma}
+\citation{chen2006plasma}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Let $\tau $ be some quantity, such as the stress tensor, that is required to compute fluxes. (a): \emph  {Type A} problem. There is an isolated discontinuity, for example a shock, in some quantity $U$. In the rest of the domain constitutive relations can be used to compute $\tau $, but in the discontinuity region, a microscale model is used since constitutive relations are insufficient. (b): \emph  {Type B} problem. There is no sufficient constitutive model for $\tau $, so $\tau $ is computed at all cell interfaces using a constrained microscale model.}}{3}}
+\newlabel{TypeABexamples}{{2}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Plasmas}{3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Illustration of the computational time spent in different computational regimes during an HMM simulation. In our system, the microscale is molecular dynamics simulation and the macroscale is kinetic theory simulation. Lines moving vertically upward correspond to the compression operator, lines moving vertically downward correspond to the reconstruction operator.}}{4}}
+\newlabel{HMM}{{3}{4}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Model Formulation}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces A cross-section of the three-dimensional periodic domain of simulation. Electrons are modeled implicitly through the screened potential. There may be multiple ion species, denoted by the different colors.}}{5}}
+\newlabel{OVITO}{{4}{5}}
+\newlabel{eq:BGK}{{1}{5}}
+\newlabel{eq:MD}{{2}{6}}
+\newlabel{eq:yukawa}{{3}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Multiscale derivation}{6}}
+\citation{gericke2003disorder}
+\newlabel{eq:taukk}{{7}{8}}
+\newlabel{eq:taukl}{{9}{8}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Method Verification}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Initial conditions for the MD (top) and BGK (bottom) simulations. (a)-(c): zeroth through second moments computed from MD. (d)-(f): zeroth through second moments computed from BGK.}}{10}}
+\newlabel{Results0}{{5}{10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces State at $t=120\omega _0^{-1}$ for the MD (top) and BGK (bottom) simulations. (a)-(c): zeroth through second moments computed from MD. (d)-(f): zeroth through second moments computed from BGK.}}{10}}
+\newlabel{ResultsEnd}{{6}{10}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Conclusions}{10}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Acknowledgments}{11}}
+\citation{klimontovich1983kinetic}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Mathematical details}{12}}
+\newlabel{dridt}{{11}{12}}
+\newlabel{dpidt}{{12}{13}}
+\newlabel{f2}{{13}{15}}
+\newlabel{elecint}{{14}{16}}
+\citation{romero1997comments}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Derivation of compression operator}{17}}
+\citation{struchtrup2005macroscopic}
+\citation{romero1997comments}
+\newlabel{eq:dHdt}{{19}{20}}
+\newlabel{eq:KE}{{21}{22}}
+\newlabel{eq:dKdt}{{22}{22}}
+\newlabel{eq:taukl}{{24}{23}}
+\newlabel{eq:taukk}{{25}{23}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Symmetry simplification}{23}}
+\newlabel{eq:BGK1D2V}{{26}{25}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Simulation Details}{25}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}Kinetic simulation}{25}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}Molecular dynamics simulation}{26}}
+\citation{hunenberger2005thermostat}
+\citation{kubo1966fluctuation}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Compression and reconstruction}{28}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Configuration of MD simulation during equilibration phase.}}{28}}
+\newlabel{MDequil}{{7}{28}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}Parametrization}{29}}
+\bibdata{MultiScale}
+\bibcite{chen2006plasma}{1}
+\bibcite{gericke2003disorder}{2}
+\bibcite{hunenberger2005thermostat}{3}
+\bibcite{klimontovich1983kinetic}{4}
+\bibcite{kubo1966fluctuation}{5}
+\bibcite{ren2005heterogeneous}{6}
+\bibcite{romero1997comments}{7}
+\bibcite{struchtrup2005macroscopic}{8}
+\bibcite{sturrock1994plasma}{9}
+\bibcite{weinan2011principles}{10}
+\bibcite{weinan2007heterogeneous}{11}
+\bibstyle{plain}

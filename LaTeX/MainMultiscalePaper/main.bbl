@@ -1,0 +1,62 @@
+\begin{thebibliography}{10}
+
+\bibitem{chen2006plasma}
+Francis~F. Chen.
+\newblock {\em Introduction to Plasma Physics and Controlled Fusion}, volume~1.
+\newblock Springer Science, 2006.
+
+\bibitem{gericke2003disorder}
+DO~Gericke and MS~Murillo.
+\newblock Disorder-induced heating of ultracold plasmas.
+\newblock {\em Contributions to Plasma Physics}, 43(5-6):298--301, 2003.
+
+\bibitem{hunenberger2005thermostat}
+Philippe~H H{\"u}nenberger.
+\newblock Thermostat algorithms for molecular dynamics simulations.
+\newblock In {\em Advanced computer simulation}, pages 105--149. Springer,
+  2005.
+
+\bibitem{klimontovich1983kinetic}
+U.~L. Klimontovich and A~Dobroslavsky.
+\newblock {\em The kinetic theory of electromagnetic processes}, volume~10.
+\newblock Springer-Verlag Berlin, 1983.
+
+\bibitem{kubo1966fluctuation}
+Rep Kubo.
+\newblock The fluctuation-dissipation theorem.
+\newblock {\em Reports on progress in physics}, 29(1):255, 1966.
+
+\bibitem{ren2005heterogeneous}
+Weiqing Ren and E~Weinan.
+\newblock Heterogeneous multiscale method for the modeling of complex fluids
+  and micro-fluidics.
+\newblock {\em Journal of Computational Physics}, 204(1):1--26, 2005.
+
+\bibitem{romero1997comments}
+V{\'\i}ctor Romero-Rochin and Enrique Gonz{\'a}lez-Tovar.
+\newblock Comments on some aspects of boltzmannh theorem using reversible
+  molecular dynamics.
+\newblock {\em Journal of statistical physics}, 89(3-4):735--749, 1997.
+
+\bibitem{struchtrup2005macroscopic}
+Henning Struchtrup.
+\newblock {\em Macroscopic transport equations for rarefied gas flows}.
+\newblock Springer, 2005.
+
+\bibitem{sturrock1994plasma}
+Peter~Andrew Sturrock.
+\newblock {\em Plasma Physics: An Introduction to the Theory of Astrophysical,
+  Geophysical and Laboratory Plasmas}.
+\newblock Cambridge University Press, 1994.
+
+\bibitem{weinan2011principles}
+E~Weinan.
+\newblock {\em Principles of multiscale modeling}.
+\newblock Cambridge University Press, 2011.
+
+\bibitem{weinan2007heterogeneous}
+E~Weinan, Bjorn Engquist, Xiantao Li, Weiqing Ren, and Eric Vanden-Eijnden.
+\newblock Heterogeneous multiscale methods: a review.
+\newblock {\em Commun. Comput. Phys}, 2(3):367--450, 2007.
+
+\end{thebibliography}

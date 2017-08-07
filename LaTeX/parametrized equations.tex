@@ -1,0 +1,210 @@
+\documentclass[11pt]{article}
+\usepackage{setspace}
+\usepackage[none]{hyphenat}
+\usepackage{amsmath}
+\doublespacing
+
+\begin{document}
+	
+	\begin{spacing}{0.5}
+		\title{Parametrization of the Kinetic and MD Equations}
+		\author{\normalsize{Gil Shohet}} 
+		\date{\normalsize\today}
+		\maketitle
+	\end{spacing}
+	
+\section*{Governing Equations}
+\paragraph{}
+For the multiscale model, we are using a kinetic model that evolves based on the 1D-2V Vlassov BGK equations at the macroscopic scale and a 2D-2V molecular dynamics (MD) simulation with a Yukawa potential at the microscopic scale.
+
+\subsection*{Kinetic Equations}
+\paragraph{}
+The kinetic model evolves a velocity distribution function, $f(x,v,t)$, where $x$ is 1D position and $v$ is the 2D velocity. The moments of the distribution function yield various properties of the plasma. The zeroth through seconds moments yield the number density, bulk velocity, and temperature
+\begin{align*}
+n &= \iint f d^2v \\
+u &= \frac{1}{n}\iint v f d^2v \\
+T &= \frac{m}{2n}\iint (v-u)^2 f d^2v
+\end{align*}
+Higher order moments yield further quantities, such as the heat flux, and describe the shape of a nonequillibrium distribution. These zeroth through second moments define a Maxwellian distribution 
+\begin{equation*}
+f_m = \frac{mn}{2\pi}\exp\left(\frac{1}{2}\frac{m(v-u)^2}{T}\right)
+\end{equation*}
+that describes the equilibrium state.
+
+The distribution function evolves a species based on the Vlassov equation with the addition of a relaxation term modeling the collisional contribution
+\begin{equation*}
+\frac{\partial f}{\partial t} + v_x\frac{\partial f}{\partial x} 
++ \frac{Ze}{m}E\frac{\partial f}{\partial v_x} = \frac{f_0 - f}{\tau}
+\end{equation*}
+where $Z$ is the charge of the species, $e$ is the fundamental charge, $E$ is the electric field, $f_0$ is the distribution that $f$ is relaxing towards (which may be a Maxwellian), and $\tau$ is some relaxation timescale. The goal of the microscale model is to determine $\tau$. In the case that there are multiple species, the equation for any given species, $i$, becomes
+\begin{equation*}
+\frac{\partial f_i}{\partial t} + v_x\frac{\partial f_i}{\partial x} 
++ \frac{Z_ie}{m_i}E\frac{\partial f_i}{\partial v_x} = 
+\frac{f_{0_i} - f_i}{\tau_{ii}} + \sum_{j \neq i}\frac{f_{0_{ij}} - f_i}{\tau_{ij}}
+\end{equation*}
+where $f_{0_{ij}}$ is a cross-species relaxation distribution, $\tau_{ii}$ is the relaxation timescale due to self-collisions, and $\tau_{ij}$ is the relaxation timescale due to cross-collisions.
+
+The electric field is computed using a potential developed from the linearized Poisson equation
+\begin{align*}
+E &= -\frac{\partial\phi}{\partial x} \\
+\phi_{xx} &= -\frac{1}{\varepsilon_0}\left(\sum_{i}Z_ien_i(x)-en_{e_0}-en_{e_0}\frac{e\phi} {T_e}\right)
+\end{align*}
+where $\varepsilon_0$ is the permittivity of free space, $n_{e_0}$ is the electron density in the domain, $\phi$ is the potential, and $T_e$ is the electron temperature. The electron density is given by
+\begin{equation*}
+n_{e_0} = \sum_{i}\int Z_in_i(x)dx
+\end{equation*}
+if we assume quasineutrality over the domain.
+
+\subsection*{Molecular Dynamics}
+\paragraph{}
+The 2D-2V MD simulation evolves according to the velocity Verlet equation
+\begin{align*}
+v(t+\frac{\Delta t}{2})  	&= v(t) + \frac{\Delta t}{2}\frac{F(t)}{m} \\
+x(t+\Delta t) 		   		&= x(t) + \Delta t\:v(t+\frac{\Delta t}{2}) \\
+v(t+\Delta t)			  	&= v(t+\frac{\Delta t}{2}) + 
+								\frac{\Delta t}{2}\frac{F(t+\Delta t)}{m}
+\end{align*}
+where $x$ and $v$ are the 2D position and velocity, respectively, and $F$ is the force due to the Yukawa potential. The Yukawa potential and force of particle $j$ on particle $i$ are given by
+\begin{align*}
+V_{ij}	&= \frac{Z_i Z_j e^2}{4 \pi \varepsilon_0 r_{ij}}\exp\left(-\frac{r_{ij}}{\lambda_{De}}\right) \\
+F_{ij}	&= -\frac{\partial V}{\partial r} = V_{ij}\left(\frac{1}{r_{ij}} + \frac{1}{\lambda_{De}}\right)
+\end{align*}
+where $V_{ij}$ is the potential, $\lambda_{De}$ is the electron screening Debye length, and $r_{ij} = |x_i - x_j|$.
+
+Various properties of the system can be calculated from the MD model and time averaged. The potential energy, $\text{PE}$, kinetic energy. $\text{KE}$, and total energy, $\text{TE}$, are given by
+\begin{align*}
+\text{PE} &= \sum_{i<j}V_{ij} = \frac{1}{2}\sum_{i,j}V_{ij} \\
+\text{KE}	&= \sum_{i}\frac{1}{2}m_iv_i^2 \\
+\text{TE}		&= \text{KE} + \text{PE}
+\end{align*}
+The density, velocity, and temperature are given by
+\begin{align*}
+n &= \frac{n}{A} \\
+u &= \frac{1}{N}\sum_{i}v_i \\
+T &= \frac{1}{d}\sum_{i}m_i(v_i-u)^2
+\end{align*}
+where $N$ is the number of particles, $A$ is the area of the region of interest, and $d$ is the number of translational of degrees of freedom, which for a 2D system is
+\begin{equation*}
+d = \begin{cases}
+	2N& 	\text{no bulk velocity prescribed}, \\
+	2N-2&	\text{bulk velocity prescribed}
+\end{cases}
+\end{equation*}
+
+Because the particle correlations are not known when placing particles initially, the system will experience heating during the initial part of the simulation. The system can be pushed towards the desired distribution using a thermostat, such as the Langevin thermostat. This modifies the velocity Verlet equations using the prescribed bulk velocity, $u$, and temperature, $T$, so that
+\begin{align*}
+v(t+\frac{\Delta t}{2}) &= v(t) + \frac{\Delta t}{2}\frac{F(t)}{m} - \frac{\gamma\Delta t}{2}\left(v(t)-u\right) + \sqrt{\frac{\gamma\Delta t\:T}{2m}}\:\eta \\
+x(t+\Delta t) &= x(t) + v(t+\frac{1}{2}\Delta t)\Delta t \\
+v(t+\Delta t) &= \left(1 + \frac{\gamma\Delta t}{2}\right)^{-1} \left(v(t+\frac{\Delta t}{2}) +  \frac{\Delta t}{2}\frac{F(t+\Delta t)}{m} + \frac{\gamma\Delta t}{2}u + \sqrt{\frac{\gamma\Delta t \:T}{2m}}\:\eta\right)
+\end{align*}
+where $\gamma$ is friction coefficient and $\eta$ is the normal distribution with unit mean and standard deviation.
+
+\section{Paremetrization}
+\paragraph{}
+Since we want to study plasmas that meet certain criteria in terms of their collisionality, it is useful to rewrite the governing equations in a more general dimensionless form based on some parameters. We can define a dimensionless coupling parameter, $\Gamma$ that describes the ratio of the potential energy to kinetic energy in the system, and a screening parameter $\kappa$ that describes the extent to which the background electrons screen the ions. These parameters are defined
+\begin{align*}
+\Gamma &= \frac{Z^2e^2}{4\pi\varepsilon_0aT} \\
+\kappa &= a/\lambda_{De}
+\end{align*}
+where $a$ is the ion circle radius defined such that
+\begin{equation*}
+\pi a^2n = 1
+\end{equation*}
+It is also useful to define a plasma frequency where
+\begin{equation*}
+\omega_p^2 = \frac{Z^2e^2n}{2\varepsilon_0am}
+\end{equation*}
+We can then use $a$ as the characteristic length scale, and $\frac{1}{\omega_p}$ as the characteristic time scale.
+
+If there was only one species confined to a domain where properties do not vary spatially, these parameters would be sufficient to parametrize the governing equations. However, there may be multiple species and the properties of the plasma may vary spatially based on the multiscale model definition. Therefore it is useful to instead pick some arbitrary reference conditions, $n_0,u_0,T_0,m_0,Z_0$ to use in the parametrization process. The above parameters then become
+\begin{align*}
+a_0^2 		&= \frac{1}{\pi n} \\
+\Gamma_0 	&= \frac{Z_0^2e^2}{4\pi\varepsilon_0a_0T_0} \\
+\omega_0^2	&= \frac{Z_0^2e^2}{2\varepsilon_0a_0m_0}
+\end{align*}
+The major dimensionless scales, denoted by the tilde, are then defined as
+\begin{align*}
+\text{Length:}&		& 	\tilde{x} &= \frac{x}{a_0} 	\\
+\text{Time:}&		&	\tilde{t} &= \omega_0 t 	\\
+\text{Mass:}&		&	\tilde{m} &= \frac{m}{m_0} 	\\
+\text{Charge:}&		&	\tilde{Z} &= \frac{Z}{Z_0}	
+\end{align*}
+We can can then define all derived quantities as
+\begin{align*}
+\text{Velocity:}&			&	\tilde{v} 	 &= \frac{v}{a_0\omega_0} 				\\
+\text{Force:}&				&	\tilde{F} 	 &= \frac{F}{a_0\omega_0^2m_0}			\\
+\text{Energy:}&				&	\tilde{U} 	 &= \frac{U}{a_0^2\omega_0^2m_0} 		\\
+\text{Distribution}& 		&	\tilde{f} 	 &= \frac{f}{a_0^4\omega_0^2}			\\
+\text{Electric Potential}&	&	\tilde{\phi} &= \frac{\phi Q_0}{a_0^2\omega_0^2m_0}	\\
+\text{Electric Field}&		&	\tilde{E} 	 &= \frac{EQ_0}{a_0\omega_0^2m_0}		\\
+\text{Density}&				&	\tilde{n}	 &= na_0^2								\\
+\text{Temperature}&			&	\tilde{T}	 &=	\frac{T}{a_0^2\omega_0^2m_0}		\\
+\end{align*}
+
+The dimensionless plasma frequency and coupling parameter can then be written
+\begin{align*}
+\tilde{\omega}_p^2 	&= \frac{\omega_p^2}{\omega_0^2} = \frac{\tilde{Z}\left(\pi\tilde{n}\right)^{\frac{3}{2}}}{\tilde{m}}	\\
+\Gamma 				&= \frac{\tilde{Z}\sqrt{\pi\tilde{n}}}{2\tilde{T}}
+\end{align*}
+We can then specify the initial conditions, $\tilde{n},\tilde{T}$, so that the coupling parameter stays within a desired range throughout the domain and pick the time step based on the highest frequency in the domain. A reasonable starting point is to keep $\Gamma$ in the range of $0.1-1$ and choose $\kappa = 1$. $\tilde{u}$ should be chosen to be small compared with the thermal speed.
+
+\subsection{Dimensionless Kinetic Equations}
+\paragraph{}
+
+The dimensionless kinetic equations are nearly identical to the dimensional version, with the exception of the Poisson equation. The dimensionless distribution function, $\tilde{f}$ evolves according to
+\begin{equation*}
+\frac{\partial\tilde{f}}{\partial\tilde{t}} + \tilde{v}_x\frac{\partial\tilde{f}}{\partial\tilde{x}} + \frac{\tilde{Z}\tilde{E}}{\tilde{m}}\frac{\partial\tilde{f}}{\partial\tilde{v}_x} = \frac{\tilde{f}_eq-\tilde{f}}{\tilde{\tau}}
+\end{equation*}
+The equation for multiple species is similar, except with cross-collisional terms added. The moments of the distribution function are
+\begin{align*}
+\tilde{n} &= \iint\tilde{f}d^2\tilde{v} \\
+\tilde{u} &= \frac{1}{\tilde{n}}\iint\tilde{v}\tilde{f}d^2\tilde{v} \\
+\tilde{T} &= \frac{\tilde{m}}{2\tilde{n}}\iint\left(\tilde{v}-\tilde{u}\right)^2\tilde{f}d^2\tilde{v}
+\end{align*}
+The Maxwellian distribution is then defined
+\begin{equation*}
+\tilde{f}_m = \frac{\tilde{m}\tilde{n}}{2\pi\tilde{T}} \exp\left(-\frac{1}{2}\frac{\tilde{m}\left(\tilde{v}-\tilde{u}\right)^2}{\tilde{T}}\right)
+\end{equation*}
+
+The Poisson term in the Vlassov BGK equation does change slightly and is given by
+\begin{align*}
+\tilde{E} 			&= -\frac{\partial\tilde{\phi}}{\partial\tilde{x}} \\
+\tilde{\phi}_{xx}	&= -2\pi\left(\tilde{Z}\tilde{n} - \tilde{Z}^{-1}\tilde{n}_{e_0} - \tilde{Z}^{-1}\tilde{n}_{e_0}\frac{\tilde{Z}^{-1}\tilde{\phi}}{\tilde{T}_e}\right)
+\end{align*}
+The $\tilde{Z}^{-1}$ terms arise because the preservation of quasineutrality in the domain means that we must know the charge of all particles being modeled to solve the Poisson equation. A simple way to deal with this is to let $Z_0 = 1$. Since $Z$ is dimensionless, the notion of a $\tilde{Z}$ quantity then becomes obsolete, and the linearized Poisson equation becomes
+\begin{equation*}
+\tilde{\phi}_{xx} = -2\pi\left(Z\tilde{n} - \tilde{n}_{e_0} - \tilde{n}_{e_0}\frac{\tilde{\phi}}{\tilde{T}_e}\right)
+\end{equation*}
+This can easily be extended to multiple species by replacing $Z\tilde{n}$ with $\sum_{i}Z_i\tilde{n}_i$. While $\tilde{n}_{e_0}$ is defined based on quasineutrality, the electron temperature will need to be prescribed, and should be larger than the temperature of the ions.
+
+\subsection{Dimensionless MD}
+\paragraph{}
+As with the kinetic equations, the dimensionless MD equations are essentially unchanged, except for the potential term. The velocity Verlet evolution terms become
+\begin{align*}
+\tilde{v}(\tilde{t}+\frac{\Delta\tilde{t}}{2}) &= \tilde{v}(\tilde{t}) + \frac{\Delta\tilde{t}}{2}\frac{\tilde{F}(\tilde{t})}{\tilde{m}} \\
+\tilde{x}(\tilde{t}+\Delta\tilde{t}) &= \tilde{x}(\tilde{t}) + \Delta\tilde{t}\:\tilde{v}(\tilde{t}+\frac{\Delta\tilde{t}}{2}) \\
+\tilde{v}(\tilde{t}+\Delta\tilde{t}) &= \tilde{v}(\tilde{t}+\frac{\Delta\tilde{t}}{2}) + \frac{\Delta\tilde{t}}{2}\frac{\tilde{F}(\tilde{t}+\Delta\tilde{t})}{\tilde{m}}
+\end{align*}
+During the equilibration phase, the Langevin velocity Verlet equations become
+\begin{align*}
+\tilde{v}(\tilde{t}+\frac{\Delta\tilde{t}}{2}) &= \tilde{v}(\tilde{t}) + \frac{\Delta\tilde{t}}{2}\frac{\tilde{F}(\tilde{t})}{\tilde{m}} - \frac{\tilde{\gamma}\Delta\tilde{t}}{2}\left(\tilde{v}(\tilde{t})-\tilde{u}\right) + \sqrt{\frac{\tilde{\gamma}\Delta\tilde{t}\:\tilde{T}}{2\tilde{m}}}\eta \\
+\tilde{x}(\tilde{t}+\Delta\tilde{t}) &= \tilde{x}(\tilde{t}) + \Delta\tilde{t}\:\tilde{v}(\tilde{t}+\frac{\Delta\tilde{t}}{2}) \\
+\tilde{v}(\tilde{t}+\frac{\Delta\tilde{t}}{2}) &= \left(1+\frac{\tilde{\gamma}\Delta\tilde{t}}{2}\right)^{-1} \left(\tilde{v}(\tilde{t}+\frac{\Delta\tilde{t}}{2}) + \frac{\Delta\tilde{t}}{2}\frac{\tilde{F}(\tilde{t}+\Delta\tilde{t})}{\tilde{m}} + \frac{\tilde{\gamma}\Delta\tilde{t}}{2}\tilde{u} + \sqrt{\frac{\tilde{\gamma}\Delta\tilde{t}\tilde{T}}{2\tilde{m}}}\eta\right)
+\end{align*}
+The Yukawa potential and force equations become
+\begin{align*}
+\tilde{V}_{ij} &= \frac{\tilde{Z}_i\tilde{Z}_j}{2\tilde{r}_{ij}} \exp\left(-\kappa\tilde{r}_{ij}\right) \\
+\tilde{F}_{ij} &= \tilde{V}_{ij} \left(\frac{1}{\tilde{r}_{ij}} + \kappa\right)
+\end{align*}
+We can also calculate and the dimensionless energies and moments by
+\begin{align*}
+\tilde{\text{PE}} 	&= \frac{1}{2}\sum_{i,j}\tilde{V}_{ij} \\
+\tilde{\text{KE}} 	&= \frac{1}{2}\sum_{i}\tilde{m}_i\tilde{v}_i^2 \\
+\tilde{\text{TE}} 	&= \tilde{\text{PE}} + \tilde{\text{KE}} \\
+\tilde{n}			&= \frac{N}{\tilde{A}} \\
+\tilde{u}			&= \frac{1}{N}\sum_{i}\tilde{v}_i \\
+\tilde{T}			&= \frac{1}{d}\sum_{i}\tilde{m}_i\left(\tilde{v}_i-\tilde{u}\right)^2
+\end{align*}
+The moments must be time-averaged since these quantities contain a significant amount of noise.
+
+\end{document}

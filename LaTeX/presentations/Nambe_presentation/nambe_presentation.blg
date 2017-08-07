@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2010)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: nambe_presentation.aux
+The style file: amsalpha.bst
+Database file #1: ../../FinalPaper/HMM_bib.bib
+You've used 9 entries,
+            2624 wiz_defined-function locations,
+            623 strings with 5936 characters,
+and the built_in function-call counts, 3653 in all, are:
+= -- 335
+> -- 200
+< -- 2
++ -- 72
+- -- 69
+* -- 333
+:= -- 615
+add.period$ -- 9
+call.type$ -- 9
+change.case$ -- 59
+chr.to.int$ -- 9
+cite$ -- 9
+duplicate$ -- 130
+empty$ -- 262
+format.name$ -- 77
+if$ -- 713
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 20
+newline$ -- 38
+num.names$ -- 27
+pop$ -- 59
+preamble$ -- 1
+purify$ -- 68
+quote$ -- 0
+skip$ -- 96
+stack$ -- 0
+substring$ -- 207
+swap$ -- 10
+text.length$ -- 2
+text.prefix$ -- 1
+top$ -- 0
+type$ -- 64
+warning$ -- 0
+while$ -- 39
+width$ -- 10
+write$ -- 107

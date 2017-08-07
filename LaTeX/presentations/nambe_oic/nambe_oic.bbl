@@ -1,0 +1,31 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{CMW05}
+
+\bibitem[CMW05]{chi2005optimal}
+Hongmei Chi, Michael Mascagni, and T~Warnock, \emph{On the optimal halton
+  sequence}, Mathematics and computers in simulation \textbf{70} (2005), no.~1,
+  9--21.
+
+\bibitem[GM03]{gericke2003disorder}
+DO~Gericke and MS~Murillo, \emph{Disorder-induced heating of ultracold
+  plasmas}, Contributions to Plasma Physics \textbf{43} (2003), no.~5-6,
+  298--301.
+
+\bibitem[HP{\etalchar{+}}03]{hess2003alternative}
+Stephane Hess, John Polak, et~al., \emph{An alternative method to the scrambled
+  halton sequence for removing correlation between standard halton sequences in
+  high dimensions}, ERSA conference papers, no. ersa03p406, European Regional
+  Science Association, 2003.
+
+\bibitem[H{\"u}n05]{hunenberger2005thermostat}
+Philippe~H H{\"u}nenberger, \emph{Thermostat algorithms for molecular dynamics
+  simulations}, Advanced computer simulation, Springer, 2005, pp.~105--149.
+
+\end{thebibliography}

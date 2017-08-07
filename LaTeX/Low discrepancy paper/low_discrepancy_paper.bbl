@@ -1,0 +1,80 @@
+\begin{thebibliography}{10}
+
+\bibitem{dalal2008low}
+Ishaan~L Dalal, Deian Stefan, and Jared Harwayne-Gidansky.
+\newblock Low discrepancy sequences for monte carlo simulations on
+  reconfigurable platforms.
+\newblock In {\em Application-Specific Systems, Architectures and Processors,
+  2008. ASAP 2008. International Conference on}, pages 108--113. IEEE, 2008.
+
+\bibitem{faure1982discrepance}
+Henri Faure.
+\newblock Discr{\'e}pance de suites associ{\'e}es {\`a} un syst{\`e}me de
+  num{\'e}ration (en dimension s).
+\newblock {\em Acta Arithmetica}, 4(41):337--351, 1982.
+
+\bibitem{fermi1955studies}
+Enrico Fermi, J~Pasta, and S~Ulam.
+\newblock Studies of nonlinear problems.
+\newblock {\em Los Alamos Report LA-1940}, page 978, 1955.
+
+\bibitem{gericke2003disorder}
+DO~Gericke and MS~Murillo.
+\newblock Disorder-induced heating of ultracold plasmas.
+\newblock {\em Contributions to Plasma Physics}, 43(5-6):298--301, 2003.
+
+\bibitem{halton1960efficiency}
+John~H Halton.
+\newblock On the efficiency of certain quasi-random sequences of points in
+  evaluating multi-dimensional integrals.
+\newblock {\em Numerische Mathematik}, 2(1):84--90, 1960.
+
+\bibitem{ide2003dot}
+Tsuyoshi Id{\'e}, M~Suzuki, M~Noguchi, H~Mizuta, H~Numata, Y~Katsu, and
+  Y~Taira.
+\newblock Dot pattern generation technique using molecular dynamics.
+\newblock {\em JOSA A}, 20(2):248--255, 2003.
+
+\bibitem{mascagni2004scrambled}
+Michael Mascagni and Hongmei Chi.
+\newblock On the scrambled halton sequence.
+\newblock {\em Monte Carlo Methods and Applications mcma}, 10(3-4):435--442,
+  2004.
+
+\bibitem{morokoff1994quasi}
+William~J Morokoff and Russel~E Caflisch.
+\newblock Quasi-random sequences and their discrepancies.
+\newblock {\em SIAM Journal on Scientific Computing}, 15(6):1251--1279, 1994.
+
+\bibitem{niederreiter1987point}
+Harald Niederreiter.
+\newblock Point sets and sequences with small discrepancy.
+\newblock {\em Monatshefte f{\"u}r Mathematik}, 104(4):273--337, 1987.
+
+\bibitem{niederreiter1988low}
+Harald Niederreiter.
+\newblock Low-discrepancy and low-dispersion sequences.
+\newblock {\em Journal of number theory}, 30(1):51--70, 1988.
+
+\bibitem{ninomiya1996toward}
+Syoiti Ninomiya and Shu Tezuka.
+\newblock Toward real-time pricing of complex financial derivatives.
+\newblock {\em Applied Mathematical Finance}, 3(1):1--20, 1996.
+
+\bibitem{soboldistribution}
+IM~Sobol.
+\newblock The distribution of points in a cube and the approximate evaluation
+  of integrals, zh. vychisl. mat. i mat. fiz. 7 (1967), 784--802.
+
+\bibitem{tuckerman2000understanding}
+Mark~E Tuckerman and Glenn~J Martyna.
+\newblock Understanding modern molecular dynamics: techniques and applications.
+\newblock {\em The Journal of Physical Chemistry B}, 104(2):159--178, 2000.
+
+\bibitem{verlet1967computer}
+Loup Verlet.
+\newblock Computer ``experiments'' on classical fluids. i. thermodynamical
+  properties of lennard-jones molecules.
+\newblock {\em Physical review}, 159(1):98, 1967.
+
+\end{thebibliography}

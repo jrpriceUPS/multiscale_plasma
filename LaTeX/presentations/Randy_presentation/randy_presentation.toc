@@ -1,0 +1,11 @@
+\beamer@endinputifotherversion {3.10pt}
+\beamer@sectionintoc {1}{Multiscale Overview}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{Overview}{2}{0}{1}
+\beamer@sectionintoc {2}{Heterogeneous Multiscale Method (HMM)}{2}{0}{2}
+\beamer@subsectionintoc {2}{1}{Overview}{2}{0}{2}
+\beamer@sectionintoc {3}{HMM for Plasma Modeling}{5}{0}{3}
+\beamer@subsectionintoc {3}{1}{Problem Statement}{5}{0}{3}
+\beamer@subsectionintoc {3}{2}{Model Formulation}{7}{0}{3}
+\beamer@subsectionintoc {3}{3}{Connecting the Models}{16}{0}{3}
+\beamer@sectionintoc {4}{Summary}{20}{0}{4}
+\beamer@sectionintoc {5}{Future Work}{21}{0}{5}

@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\graphicspath{{./figures/}}
+
+\title{Heterogeneous multiscale modeling of plasma confined to a two-dimensional periodic domain}
+
+\begin{document}
+\maketitle
+
+\section{Multiscale connection}
+
+The key connection between MD and BGK is $\tau$ (or $\tau_{ii}$ and $\tau_{ij}$ in the multi-species case). Let us return to the point at which we separated the collisional terms from the Poisson terms and express $C'$ in terms of $C=f_2(\mathbf{r},\mathbf{p},\mathbf{r}',\mathbf{p}',t)-f(\mathbf{r},\mathbf{p},t)f(\mathbf{r}',\mathbf{p}',t)$:
+\begin{align*}
+C'=&\int\int\nabla_\mathbf{r}U'(\mathbf{r}-\mathbf{r'})\cdot\nabla_\mathbf{p}C\;d\mathbf{r}'d\mathbf{p}'\\
+=&\int\int\nabla_\mathbf{r}U'(\mathbf{r}-\mathbf{r'})\cdot\nabla_\mathbf{p}[f_2(\mathbf{r},\mathbf{p},\mathbf{r}',\mathbf{p}',t)-f(\mathbf{r},\mathbf{p},t)f(\mathbf{r}',\mathbf{p}',t)]\;d\mathbf{r}'d\mathbf{p}'\\
+=&\int\int\nabla_\mathbf{r}U'(\mathbf{r}-\mathbf{r}')\cdot\nabla_\mathbf{p}f_2(\mathbf{r},\mathbf{p},\mathbf{r}',\mathbf{p}',t)\;d\mathbf{r}'d\mathbf{p}'\\&-\int\int\nabla_\mathbf{r}U'(\mathbf{r}-\mathbf{r}')\cdot\nabla_\mathbf{p}[f(\mathbf{r},\mathbf{p},t)f(\mathbf{r}',\mathbf{p}',t)]\;d\mathbf{r}'d\mathbf{p}'\\
+=&\int\int\nabla_\mathbf{r}U'(\mathbf{r}-\mathbf{r}')\cdot\nabla_\mathbf{p}f_2(\mathbf{r},\mathbf{p},\mathbf{r}',\mathbf{p}',t)\;d\mathbf{r}'d\mathbf{p}'-Ze\nabla_\mathbf{r}\phi'\cdot \nabla_\mathbf{p}f(\mathbf{r},\mathbf{p},t)
+\end{align*}where $\phi'$ is the electrostatic field due only to the ions and not the background electrons. Returning to the definition of $f_2$, we compute a simplification:
+\begin{align*}
+\int f_2(\mathbf{r},\mathbf{p},\mathbf{r}',\mathbf{p}',t)\;d\mathbf{p}'=&\int E\left[\sum_{i,j}\delta(\mathbf{r}-\mathbf{r}_i(t))\delta(\mathbf{p}-\mathbf{p}_i(t))\delta(\mathbf{r}'-\mathbf{r}_j(t))\delta(\mathbf{p}'-\mathbf{p}_j(t))\right]\;d\mathbf{p}'\\
+=&E\left[\sum_{i,j}\delta(\mathbf{r}-\mathbf{r}_i(t))\delta(\mathbf{p}-\mathbf{p}_i(t))\delta(\mathbf{r}'-\mathbf{r}_j(t))\int \delta(\mathbf{p}'-\mathbf{p}_j(t))\;d\mathbf{p}'\right]\\
+=&E\left[\sum_{i,j}\delta(\mathbf{r}-\mathbf{r}_i(t))\delta(\mathbf{p}-\mathbf{p}_i(t))\delta(\mathbf{r}'-\mathbf{r}_j(t))\right].
+\end{align*}Substituting this into our expression for $C'$, we find
+\begin{align*}
+C'=&\int\nabla_\mathbf{r}U'(\mathbf{r}-\mathbf{r}')\cdot \nabla_p E\left[\sum_{i,j}\delta(\mathbf{r}-\mathbf{r}_i(t))\delta(\mathbf{p}-\mathbf{p}_i(t))\delta(\mathbf{r}'-\mathbf{r}_j(t))\right]\;d\mathbf{r}'-Ze\nabla_\mathbf{r}\phi'\cdot \nabla_\mathbf{p}f(\mathbf{r},\mathbf{p},t)\\
+=&E\left[\sum_{i,j}\delta(\mathbf{r}-\mathbf{r}_i(t))\int \nabla_\mathbf{r}U'(\mathbf{r}-\mathbf{r}')\delta(\mathbf{r}'-\mathbf{r}_j(t))\,d\mathbf{r}'\cdot\nabla_\mathbf{p}\delta(\mathbf{p}-\mathbf{p}_i(t))\;d\mathbf{r}'\right]-Ze\nabla_\mathbf{r}\phi'\cdot\nabla_\mathbf{p}f(\mathbf{r},\mathbf{p},t)\\
+=&E\left[\sum_{i,j}\delta(\mathbf{r}-\mathbf{r}_i(t))\nabla_\mathbf{r}U'(\mathbf{r}-\mathbf{r}_j(t))\cdot\nabla_\mathbf{p}\delta(\mathbf{p}-\mathbf{p}_i(t))\right]-Ze\nabla_\mathbf{r}\phi'\cdot\nabla_\mathbf{p}f(\mathbf{r},\mathbf{p},t).
+\end{align*}Now suppose we substitute in the BGK expression for $C'$:
+\begin{align*}\frac{f_{eq}-f}{\tau}+Ze\nabla_\mathbf{r}\phi'\cdot\nabla_\mathbf{p}f(\mathbf{r},\mathbf{p},t)=&E\left[\sum_{i,j}\delta(\mathbf{r}-\mathbf{r}_i(t))\nabla_\mathbf{r}U'(\mathbf{r}-\mathbf{r}_j(t))\cdot\nabla_\mathbf{p}\delta(\mathbf{p}-\mathbf{p}_i(t))\right]\\
+\frac{f_{eq}-f}{\tau}+Ze\nabla_\mathbf{r}\phi'\cdot\nabla_\mathbf{p}f(\mathbf{r},\mathbf{p},t)=&E\left[\nabla_\mathbf{r}\left(\sum_jU'(\mathbf{r}-\mathbf{r}_j)\right)\cdot\nabla_\mathbf{p}\left(\sum_i\delta(\mathbf{r}-\mathbf{r}_i)\delta(\mathbf{p}-\mathbf{p}')\right)\right].
+\end{align*}We hope to compute the expected value on the right hand side from the MD simulation.
+
+Now I'm just doing random ideas. Let's express everything in Klimontovich terms:
+\begin{align*}
+f_{eq}(\tau)=&f-\tau Ze\nabla_\mathbf{r}f+\tau E\left[\nabla_\mathbf{r}\left(\sum_jU'(\mathbf{r}-\mathbf{r}_j)\right)\cdot\nabla_\mathbf{p}\left(\sum_i\delta(\mathbf{r}-\mathbf{r}_i)\delta(\mathbf{p}-\mathbf{p}')\right)\right]\\
+f_{eq}(\tau)=&E\left[\sum_i\delta(\mathbf{r}-\mathbf{r}_i)\delta(\mathbf{p}-\mathbf{p}_i)\right]-\tau Ze\nabla_\mathbf{r}E\left[\sum_i\delta(\mathbf{r}-\mathbf{r}_i)\delta(\mathbf{p}-\mathbf{p}_i)\right]\\&+\tau E\left[\nabla_\mathbf{r}\left(\sum_jU'(\mathbf{r}-\mathbf{r}_j)\right)\cdot\nabla_\mathbf{p}\left(\sum_i\delta(\mathbf{r}-\mathbf{r}_i)\delta(\mathbf{p}-\mathbf{p}')\right)\right]\\
+=&E\left[\left(1-\tau Z e \nabla_\mathbf{r}\phi'\cdot \nabla_\mathbf{p}+\tau\nabla_\mathbf{r}\left(\sum_jU'(\mathbf{r}-\mathbf{r}_j)\right)\cdot\nabla_\mathbf{p}\right)\sum_i\delta(\mathbf{r}-\mathbf{r}_i)\delta(\mathbf{p}-\mathbf{p}_i)\right].
+\end{align*}Notice that the thing in the parentheses there is some big nasty operator, but it's all operating on that $i$ sum over there...I dunno if this is going anywhere...
+
+\end{document}

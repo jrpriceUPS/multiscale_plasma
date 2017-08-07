@@ -1,0 +1,54 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{WEL{\etalchar{+}}07}
+
+\bibitem[FS00]{franklin2000boltzmann}
+RN~Franklin and J~Snell, \emph{The boltzmann relation in electronegative
+  plasmas: When is it permissible to use it?}, Journal of Plasma Physics
+  \textbf{64} (2000), no.~02, 131--153.
+
+\bibitem[FWF00]{flekkoy2000hybrid}
+EG~Flekk{\o}y, G~Wagner, and J~Feder, \emph{Hybrid model for combined particle
+  and continuum dynamics}, EPL (Europhysics Letters) \textbf{52} (2000), no.~3,
+  271.
+
+\bibitem[HP97]{hadjiconstantinou1997heterogeneous}
+Nicolas~G Hadjiconstantinou and Anthony~T Patera, \emph{Heterogeneous
+  atomistic-continuum representations for dense fluid systems}, International
+  Journal of Modern Physics C \textbf{8} (1997), no.~04, 967--976.
+
+\bibitem[KD83]{klimontovich1983kinetic}
+U.~L. Klimontovich and A~Dobroslavsky, \emph{The kinetic theory of
+  electromagnetic processes}, vol.~10, Springer-Verlag Berlin, 1983.
+
+\bibitem[LLY99]{li1999nearly}
+Ju~Li, Dongyi Liao, and Sidney Yip, \emph{Nearly exact solution for coupled
+  continuum/md fluid simulation}, Journal of Computer-Aided Materials Design
+  \textbf{6} (1999), no.~2-3, 95--102.
+
+\bibitem[NCR{\etalchar{+}}04]{nie2004continuum}
+XB~Nie, SY~Chen, MO~Robbins, et~al., \emph{A continuum and molecular dynamics
+  hybrid method for micro-and nano-fluid flow}, Journal of Fluid Mechanics
+  \textbf{500} (2004), 55--64.
+
+\bibitem[RW05]{ren2005heterogeneous}
+Weiqing Ren and E~Weinan, \emph{Heterogeneous multiscale method for the
+  modeling of complex fluids and micro-fluidics}, Journal of Computational
+  Physics \textbf{204} (2005), no.~1, 1--26.
+
+\bibitem[Wei11]{weinan2011principles}
+E~Weinan, \emph{Principles of multiscale modeling}, Cambridge University Press,
+  2011.
+
+\bibitem[WEL{\etalchar{+}}07]{weinan2007heterogeneous}
+E~Weinan, Bjorn Engquist, Xiantao Li, Weiqing Ren, and Eric Vanden-Eijnden,
+  \emph{Heterogeneous multiscale methods: a review}, Commun. Comput. Phys
+  \textbf{2} (2007), no.~3, 367--450.
+
+\end{thebibliography}

@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\graphicspath{{./figures/}}
+
+\title{Computing $\tau_{kl}(x)$ in HMM in 1-, 2-, and $n$-Species Systems}
+\author{Jake Price}
+
+\begin{document}
+\maketitle
+
+
+
+\section{Assumptions and Definitions}
+
+Let the Klimontovich distribution for a system with $n$ species and $N$ total ions be defined as:
+\begin{equation}
+\mathcal{N}(\mathbf{r},\mathbf{v},\{\mathbf{r}_i\}_{i=1}^N,\{\mathbf{v}_i\}_{i=1}^N)=\sum_i \delta(\mathbf{r}-\mathbf{r}_i(t))\delta(\mathbf{v}-\mathbf{v}_i(t)).
+\end{equation}For species $k$, let the set of indices corresponding to ions in that species be given by $S_k=\{i\;|\;$particle $i$ is a member of species $k\}$. Then the Klimontovich distribution for species $k$ is given by
+\begin{equation}
+\mathcal{N}_k(\mathbf{r},\mathbf{v},\{\mathbf{r}_i\}_{i=1}^N,\{\mathbf{v}_i\}_{i=1}^N)=\sum_{i\in S_k}\delta(\mathbf{r}-\mathbf{r}_i(t))\delta(\mathbf{v}-\mathbf{v}_i(t)).
+\end{equation}Note that, by definition $\mathcal{N}=\sum_k \mathcal{N}_k$. Note also that the expected value of these distributions are $f_k$ and $f$ respectively (again by definition).
+
+Suppose now that, over the macroscopic domain, these distributions evolve according to the BGK equation with periodic boundary conditions and Yukawa potential:
+\begin{equation}
+\begin{split}
+&\frac{\partial f_k}{\partial t}+\mathbf{v}\cdot\nabla_\mathbf{r}f_k-\frac{Z_ke}{m_k}\nabla_\mathbf{r}\phi(\mathbf{r},t)\cdot\nabla_\mathbf{v}f_k=\sum_l\frac{f_{kl}^{eq}-f_k}{\tau_{kl}}\\
+&\left(\bigtriangleup_\mathbf{r}-\frac{1}{\lambda^2}\right)\phi(\mathbf{r},t)=-\frac{1}{\epsilon_0}\rho(\mathbf{r}',t)\\
+&f_k(\mathbf{r},\mathbf{v},0)=f_{k}(\mathbf{r},\mathbf{v})\\
+&\left.f_k(\mathbf{r},\mathbf{v},t)\right|_{x=0}=\left.f_{k}(\mathbf{r},\mathbf{v},t)\right|_{x=L_x},\;\;\;\;
+\left.\phi(\mathbf{r},\mathbf{v},t)\right|_{x=0}=\left.\phi(\mathbf{r},\mathbf{v},t)\right|_{x=L_x}\\
+&\left.f_k(\mathbf{r},\mathbf{v},t)\right|_{y=0}=\left.f_{k}(\mathbf{r},\mathbf{v},t)\right|_{y=L_y},\;\;\;\;
+\left.\phi(\mathbf{r},\mathbf{v},t)\right|_{y=0}=\left.\phi(\mathbf{r},\mathbf{v},t)\right|_{y=L_y}\\
+&\left.f_k(\mathbf{r},\mathbf{v},t)\right|_{z=0}=\left.f_{k}(\mathbf{r},\mathbf{v},t)\right|_{z=L_z},\;\;\;\;
+\left.\phi(\mathbf{r},\mathbf{v},t)\right|_{z=0}=\left.\phi(\mathbf{r},\mathbf{v},t)\right|_{z=L_z}.
+\end{split}
+\label{eq:BGK}
+\end{equation}
+The quantities $\tau_{kl}$ are unknown. They are allowed to vary in space and time, but not in velocity. They are also not necessarily symmetric ($\tau_{kl}(\mathbf{r},t)\neq \tau_{lk}(\mathbf{r},t)$).
+
+\section{One Species}
+
+Consider computing $\tau(\mathbf{r},t)$ for a system with only one species. We will introduce the entropy of the system, which we define as:
+\begin{equation}
+\mathcal{H}(t)=\iint f\log(f)\,d\mathbf{r}\,d\mathbf{v}.
+\end{equation}Our goal is to select $\tau(\mathbf{r},t)$ such that, at position $\mathbf{r}$ and time $t$ the rate of change of the entropy is the same in an MD simulation and in the BGK simulation. Therefore, we take the time derivative and use the BGK equation:
+\begin{align*}
+\frac{\partial \mathcal{H}}{\partial t}=&\iint \frac{\partial f}{\partial t}[\log(f)+1]\,d\mathbf{r}\,d\mathbf{v}\\
+=&\iint \frac{f^{eq}-f}{\tau}[\log(f)+1]\,d\mathbf{r}\,d\mathbf{v}-\iint \mathbf{v}\cdot \nabla_\mathbf{r}f[\log(f)+1]\,d\mathbf{r}\,d\mathbf{v}\\
+&+\frac{Ze}{m}\nabla_\mathbf{r}\phi\cdot\nabla_\mathbf{v}f[\log(f)+1]\,d\mathbf{r}\,d\mathbf{v}
+\end{align*}
+
+
+
+
+
+\end{document}
